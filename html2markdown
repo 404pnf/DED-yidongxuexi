@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
+require 'find'
+require 'reverse_markdown'
+
+
+(puts "使用方法 \n     #{$0} 目录名称 \n目录中是待处理的html文件"  ;exit;) unless ARGV.size == 1
+
+input = ARGV[0]
+Find.find input do |file|
+  next unless file =~ /\.(html|htm)$/
+  str = File.read(file)
+  markdown = ReverseMarkdown.parse str
+  File.open("#{file}.md", 'w') do |f|
+    f.puts markdown
+  end
+  p "生成文件 #{file}.md"
+end
+       
+
+  
