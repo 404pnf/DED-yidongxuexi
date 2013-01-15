@@ -7,7 +7,7 @@ require 'reverse_markdown'
 
 (puts "使用方法 \n     #{$0} 目录名称 \n目录中是待处理的html文件"  ;exit;) unless ARGV.size == 1
 
-input = ARGV[0]
+input = File.expand_path ARGV[0]
 Find.find input do |file|
   next unless file =~ /\.(html|htm)$/
   str = File.read(file)
@@ -15,10 +15,10 @@ Find.find input do |file|
   markdown.gsub!(/^!\[\]\(.+$/, '') # 去除掉所有![]()标签行
   markdown.gsub!(/\n\n+/, "\n\n") # 统一段落间距
   new_file = File.basename(file).split('.', 2)[0] + '.txt'
-  File.open(new_file, 'w') do |f|
+  File.open("#{input}/#{new_file}", 'w') do |f|
     f.puts markdown
   end
-  p "生成文件 #{new_file}"
+  p "生成文件 #{File.expand_path new_file}"
 end
        
 
