@@ -1,4 +1,4 @@
-转thml文档到markdown。
+转thml文档到markdown，并去除掉所有单独的img标签行，并统一段落间距为两个换行符号。
 
 工作流程
 

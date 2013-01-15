@@ -12,10 +12,13 @@ Find.find input do |file|
   next unless file =~ /\.(html|htm)$/
   str = File.read(file)
   markdown = ReverseMarkdown.parse str
-  File.open("#{file}.md", 'w') do |f|
+  markdown.gsub!(/^!\[\]\(.+$/, '') # 去除掉所有![]()标签行
+  markdown.gsub!(/\n\n+/, "\n\n") # 统一段落间距
+  new_file = File.basename(file).split('.', 2)[0] + '.txt'
+  File.open(new_file, 'w') do |f|
     f.puts markdown
   end
-  p "生成文件 #{file}.md"
+  p "生成文件 #{new_file}"
 end
        
 
